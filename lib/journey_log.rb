@@ -1,4 +1,5 @@
 require_relative "journey"
+
 class JourneyLog
 
   attr_reader :journey_class
@@ -15,11 +16,16 @@ class JourneyLog
   def finish(station)
     @current_journey.end(station)
     @journeys << @current_journey.journey
+    print @current_journey.zone_calc
     @current_journey = nil
   end
 
   def journeys
     @journeys.dup
+  end
+
+  def zone
+
   end
 
   private
@@ -31,5 +37,7 @@ class JourneyLog
   def add(journey)
     @journeys << journey
   end
+
+
 
 end

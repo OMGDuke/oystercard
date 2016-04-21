@@ -1,3 +1,5 @@
+require_relative "station"
+
 class Journey
   attr_reader :journey, :exit
 
@@ -26,5 +28,10 @@ class Journey
 
   def fare
     complete? ? 1 : PENALTY_FARE
+  end
+
+  def zone_calc
+    zone_array = [@entry_station[:entry_station].zone, @exit_station.zone]
+    (zone_array.max - zone_array.min) + 1
   end
 end
