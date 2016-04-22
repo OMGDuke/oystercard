@@ -14,8 +14,15 @@ class JourneyLog
   end
 
   def start(station)
-    @current_journey = @journey_class.new(station)
-    @journeys << {entry_station: station}
+    # if @journeys.last.length = 1 && @journeys.last.key?(:entry_station)
+    if !@current_journey.nil? && !@current_journey.complete?
+      @fare = @current_journey.fare
+      @current_journey = @journey_class.new(station)
+      @journeys << {entry_station: station}
+    else
+      @current_journey = @journey_class.new(station)
+      @journeys << {entry_station: station}
+    end
   end
 
   def finish(station)
@@ -23,6 +30,11 @@ class JourneyLog
     @journeys.last.merge!({exit_station: station})
     @fare = @current_journey.fare
     @current_journey = nil
+  end
+
+  def fare_due
+    @fare
+    @fare = 0
   end
 
   private

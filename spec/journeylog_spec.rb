@@ -3,8 +3,8 @@ require "journeylog"
 describe JourneyLog do
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
-  let(:journey) { double :journey, fare: 1 }
-  let(:pen_journey) { double :journey, fare: 6 }
+  let(:journey) { double :journey, fare: 1, complete?: false, nil?: true}
+  let(:pen_journey) { double :journey, fare: 6, nil?: false, complete?: false}
   let(:journey_class) { double :journey_class, new: journey }
   let(:entry_hash) {{entry_station: entry_station}}
   let(:exit_hash) {{exit_station: exit_station}}
