@@ -2,8 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 	subject(:card) {Oystercard.new}
-	let (:station1) {double :station}
-	let (:station2) {double :station}
+	let (:station1) {double :station, zone: 1}
+	let (:station2) {double :station, zone: 1}
 
 
 	describe '#initalize' do
@@ -40,4 +40,3 @@ describe Oystercard do
 			end
 	end
 end
-

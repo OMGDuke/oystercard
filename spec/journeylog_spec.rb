@@ -3,9 +3,11 @@ require "journeylog"
 describe JourneyLog do
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
-  let(:journey) { double :journey }
+  let(:journey) { double :journey, fare: 1 }
+  let(:pen_journey) { double :journey, fare: 6 }
   let(:journey_class) { double :journey_class, new: journey }
   let(:entry_hash) {{entry_station: entry_station}}
+  let(:exit_hash) {{exit_station: exit_station}}
   let(:journey_hash) {{entry_station: entry_station, exit_station: exit_station}}
   subject(:journey_log) { described_class.new(journey_class) }
 
@@ -20,6 +22,17 @@ describe JourneyLog do
       journey_log.start(entry_station)
       expect(journey_log.journeys).to eq [entry_hash]
     end
+    it "raises a penalty fare if journey incomplete" do
+      journey_log.start(entry_station)
+      journey_log.start(entry_station)
+      expect(journey_log.fare).to eq (6)
+    end
+
+    it "starts a new journey if previous journey incomplete" do
+      journey_log.start(entry_station)
+      journey_log.start(entry_station)
+      expect(journey_log.journeys).to eq [entry_hash, entry_hash]
+    end
   end
 
   describe "#finish" do
@@ -28,6 +41,16 @@ describe JourneyLog do
       journey_log.start(entry_station)
       journey_log.finish(exit_station)
       expect(journey_log.journeys).to eq [journey_hash]
+    end
+
+    it "raises a penalty fare if journey not started" do
+      journey_log.finish(exit_station)
+      expect(journey_log.fare).to eq (6)
+    end
+
+    it "adds the incomplete touchout to journeys" do
+      journey_log.finish(exit_station)
+      expect(journey_log.journeys).to eq [exit_hash]
     end
   end
 end
