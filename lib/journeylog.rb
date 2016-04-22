@@ -1,6 +1,7 @@
 class JourneyLog
 
-  def initialize
+  def initialize(journey_class = Journey)
+    @journey_class = journey_class
     @journeys = []
   end
 
@@ -8,9 +9,15 @@ class JourneyLog
     @journeys.clone
   end
 
-  def start station
-    @journeys << Journey.new
-    current_journey.start(station)
+  def start(station)
+    @current_journey = @journey_class.new(station)
+    @journeys << {entry_station: station}
+  end
+
+  def finish(station)
+    @current_journey.end(station)
+    @journeys.last.merge!({exit_station: station})
+    @current_journey = nil
   end
 
   private

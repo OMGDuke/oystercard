@@ -2,28 +2,18 @@ class Journey
   MIN_FARE = 1
   PENALTY_FARE = 6
 
-  def initialize
-    @journey = {}
-  end
-
-  def start(station)
-    @journey[:start] = station
+  def initialize(station)
+    @entry_station = station
+    @complete  = false
   end
 
   def end(station)
-    @journey[:end] = station
+    @exit_station = station
+    @complete = true
   end
 
-  # def get_start
-  #   @journey[:start]
-  # end
-
-  # def get_end
-  #   @journey[:end]
-  # end
-
   def complete?
-    @journey.keys.length.even?
+    @complete
   end
 
   def fare
