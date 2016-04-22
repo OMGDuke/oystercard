@@ -1,6 +1,9 @@
-class JourneyLog
+require_relative "journey"
 
-  def initialize(journey_class = Journey)
+class JourneyLog
+  attr_reader :journey_class
+
+  def initialize(journey_class=Journey)
     @journey_class = journey_class
     @journeys = []
   end
@@ -26,5 +29,3 @@ class JourneyLog
     @journeys.last
   end
 end
-
-

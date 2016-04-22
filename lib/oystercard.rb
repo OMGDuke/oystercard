@@ -1,4 +1,4 @@
-require 'journeylog'
+require_relative 'journeylog'
 
 class Oystercard
 	MAX_BALANCE = 90
