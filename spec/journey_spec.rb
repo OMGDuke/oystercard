@@ -27,7 +27,8 @@ describe Journey do
 
   describe "#fare" do
     it "return 6 if journey not complete" do
-      expect(subject.fare)to eq Journey::PENALTY_FARE
+      pen = Journey::PENALTY_FARE
+      expect(subject.fare).to eq(pen)
     end
     it "calculates fare between the same zone" do
       subject.end(entry_station)
@@ -38,6 +39,4 @@ describe Journey do
       expect(subject.fare).to eq 2
     end
   end
-
-
 end

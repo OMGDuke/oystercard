@@ -1,11 +1,12 @@
 require_relative "journey"
 
 class JourneyLog
-  attr_reader :journey_class
+  attr_reader :journey_class, :fare
 
   def initialize(journey_class=Journey)
     @journey_class = journey_class
     @journeys = []
+    @fare = nil
   end
 
   def journeys
@@ -20,6 +21,7 @@ class JourneyLog
   def finish(station)
     @current_journey.end(station)
     @journeys.last.merge!({exit_station: station})
+    @fare = @current_journey.fare
     @current_journey = nil
   end
 

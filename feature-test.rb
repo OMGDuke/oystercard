@@ -4,7 +4,7 @@ require './lib/station.rb'
 oy = Oystercard.new
 
 stat1 = Station.new("baker", 1)
-stat2 = Station.new("liverpool", 2)
+stat2 = Station.new("liverpool", 3)
 
 oy.top_up(50)
 oy.touch_in(stat1)
