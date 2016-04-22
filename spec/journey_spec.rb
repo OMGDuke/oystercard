@@ -1,8 +1,8 @@
 require 'journey'
 
 describe Journey do
-  let(:entry_station) { double(:station) }
-  let(:exit_station) { double(:station) }
+  let(:entry_station) { double(:station, zone: 1) }
+  let(:exit_station) { double(:station, zone: 2) }
   subject(:journey) { described_class.new(entry_station) }
 
   describe "#complete?" do
@@ -26,13 +26,18 @@ describe Journey do
   end
 
   describe "#fare" do
-    it "returns the minimum fare for complete journeys" do
-      allow(journey).to receive(:complete?) { true }
-      expect(journey.fare).to eq Journey::MIN_FARE
+    it "return 6 if journey not complete" do
+      expect(subject.fare)to eq Journey::PENALTY_FARE
     end
-    it "returns the penalty fare for incomplete journeys" do
-      allow(journey).to receive(:complete?) { false }
-      expect(journey.fare).to eq Journey::PENALTY_FARE
+    it "calculates fare between the same zone" do
+      subject.end(entry_station)
+      expect(subject.fare).to eq 1
+    end
+    it "calculates fare between zone 1 and 2" do
+      subject.end(exit_station)
+      expect(subject.fare).to eq 2
     end
   end
+
+
 end
